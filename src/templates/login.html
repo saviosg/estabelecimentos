@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_control, render_checkbox, render_button %}
+{% from "security/_macros.html" import prop_next %}
+{% block content %}
+<div class="alert alert-warning" role="alert">
+  Usuário para testes:
+  <br>
+  <strong>Email:</strong> usuario@teste.com
+  <br>
+  <strong>Senha:</strong> teste
+</div>
+<form action="{{ url_for_security('login') }}{{ prop_next() }}" method="post">
+  {{ login_user_form.hidden_tag() }}
+  <div class="mb-3">
+    {{ render_control(login_user_form.email) }}
+  </div>
+  <div class="mb-3">
+    {{ render_control(login_user_form.password) }}
+  </div>
+  <div class="mb-3">
+    {{ render_checkbox(login_user_form.remember) }}
+  </div>
+  {{ render_button(login_user_form.submit) }}
+</form>
+{% endblock %}

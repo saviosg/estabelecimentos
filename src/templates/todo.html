@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Todo{% endblock %}
+{% block content %}
+<style>
+  .task-done {
+    text-decoration: line-through;
+  }
+</style>
+<script>
+  window.addEventListener("DOMContentLoaded", (event) => {
+    const todo = document.getElementById("tasks");
+    todo.addEventListener("change", (e) => {
+      if (e.target.type && e.target.type === "checkbox") {
+        e.target.parentElement.classList.toggle("task-done");
+      }
+    });
+    document.getElementById("remove-done").addEventListener("click", (e) => {
+      document.querySelectorAll(".task-done").forEach(item => item.remove());
+    });
+    document.getElementById("new-task-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const task = new FormData(e.target).get("new-task");
+      if (!task) {
+        return;
+      }
+      const item = document.createElement("li");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.classList.add("form-check-input");
+      const rule = document.createElement("div");
+      rule.classList.add("vr");
+      item.appendChild(checkbox);
+      item.appendChild(rule);
+      item.appendChild(document.createTextNode(task));
+      item.classList.add("list-group-item");
+      item.classList.add("hstack");
+      item.classList.add("gap-3");
+      todo.appendChild(item);
+    });
+  });
+</script>
+<form id="new-task-form" autocomplete="off">
+  <div class="mb-3">
+    <label for="new-task" class="form-label">Nova tarefa</label>
+    <input type="text" class="form-control" name="new-task">
+  </div>
+  <button type="submit" class="btn btn-primary">Adicionar</button>
+  <button type="button" class="btn btn-success" id="remove-done">Remover finalizadas</button>
+</form>
+<ul class="list-group mt-3" id="tasks">
+  <li class="list-group-item hstack gap-3"><input type="checkbox" class="form-check-input">
+    <div class="vr"></div>Adicionar tarefas
+  </li>
+  <li class="list-group-item hstack gap-3"><input type="checkbox" class="form-check-input">
+    <div class="vr"></div>Beber água
+  </li>
+</ul>
+{% endblock %}

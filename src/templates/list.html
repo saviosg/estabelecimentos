@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Estabelecimentos{% endblock %}
+{% block content %}
+<a href="./new" class="btn btn-primary">Adicionar estabelecimento</a>
+<div class="table-responsive">
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th scope="col">CNPJ</th>
+        <th scope="col">Nome fantasia</th>
+        <th scope="col">CEP</th>
+        <th scope="col">Telefone</th>
+        <th scope="col">Email</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for doc in documents %}
+      <tr>
+        <td>{{ doc.cnpj|e }}</td>
+        <td>{{ doc.nome_fantasia|e }}</td>
+        <td>{{ doc.cep|e }}</td>
+        <td>{{ doc.telefone|e }}</td>
+        <td>{{ doc.email|e }}</td>
+        <td>
+          <form class="btn-group btn-group-sm" role="group" method="post" action="{{ " ./delete/" ~ doc.id }}">
+            <a href="{{ " ./edit/" ~ doc.id }}" class="btn btn-primary">Alterar</a>
+            <button type="submit" class="btn btn-danger">Remover</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

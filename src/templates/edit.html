@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_control, render_button %}
+{% block title %}{{ ("Editar" if document else "Adicionar") ~ " estabelecimento" }}{% endblock %}
+{% block content %}
+<form class="row g-3" method="post">
+  {% set document = document or None %}
+  {{ form.hidden_tag() }}
+  <div class="col-md-5">
+    {{ render_control(form.cnpj, value=document.cnpj|e|d("")) }}
+  </div>
+  <div class="col-md-7">
+    {{ render_control(form.nome_fantasia, value=document.nome_fantasia|e|d("")) }}
+  </div>
+  <div class="col-md-4">
+    {{ render_control(form.cep, value=document.cep|e|d("")) }}
+  </div>
+  <div class="col-md-4">
+    {{ render_control(form.telefone, value=document.telefone|e|d("")) }}
+  </div>
+  <div class="col-md-4">
+    {{ render_control(form.email, value=document.email|e|d("")) }}
+  </div>
+  {{ render_button(form.submit) }}
+</form>
+{% endblock %}
